@@ -36,8 +36,10 @@ public class FileTest {
 		//해당 디렉토리의 파일 리스트 출력
 		String list[] = file_dir.list();
 		for(int i=0; i<list.length ; i++) {
-			System.out.print(list[i]);
+			System.out.println(list[i]);
 		}
+		System.out.println("");
+		System.out.println("done");
 	}
 
 }
