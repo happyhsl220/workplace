@@ -23,17 +23,14 @@ public class RequestHandler extends Thread {
 			DataOutputStream dos = new DataOutputStream(out);
 		
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
-			int i = 1;
-			System.out.println("processing start!! : " + i);
-			i = i + 1;
+			System.out.println("processing start!! " );
+
 			String line = br.readLine();
-			System.out.println("here");
 			System.out.println(line);
 			while(!line.equals("")){			
 				line = br.readLine();
 				System.out.println(line);		
 			}
-			System.out.println("After printing");
 			byte[] body = "Hello World".getBytes();
 			response200Header(dos, body.length);
 			responseBody(dos, body);
