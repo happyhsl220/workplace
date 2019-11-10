@@ -1,6 +1,7 @@
 package webServer;
 
 import java.net.Socket;
+import java.nio.file.Files;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -28,20 +29,26 @@ public class RequestHandler extends Thread {
 			System.out.println("processing start!! " );
 
 			String line = br.readLine();
-			String action = line.substring(line.indexOf("/")+1, line.lastIndexOf("/")-5);
-			System.out.println(line);
-			System.out.println(action);
-			while(!line.equals("")){			
-				line = br.readLine();
-				System.out.println(line);		
+			if (line == null) {
+				return;
 			}
-			File file = new File(".");
-			String filePath =  file.getAbsolutePath(); 
-			File file2 = new File(filePath + File.separator + action );
-			FileInputStream fis = new FileInputStream(file2);
+//			String action = line.substring(line.indexOf("/")+1, line.lastIndexOf("/")-5);
+			String[] splited = line.split(" ");
+			String path = splited[1];
+
+//			while(!line.equals("")){			
+//				line = br.readLine();
+//				System.out.println(line);		
+//			}
+//			File file = new File(".");
+//			String filePath =  file.getAbsolutePath(); 
+//			File file2 = new File("." + File.separator + url );
+//			FileInputStream fis = new FileInputStream(file2);
 			
-			byte[] body = new byte[1000];
-			fis.read(body);
+//			byte[] body = new byte[1000];
+			byte[] body = Files.readAllBytes(new File("." + path).toPath());
+			System.out.println(new File("." + path).toPath());
+//			fis.read(body);
 //			byte[] body = "Hello World".getBytes();
 			response200Header(dos, body.length);
 			responseBody(dos, body);
