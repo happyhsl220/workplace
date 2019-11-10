@@ -3,6 +3,8 @@ package webServer;
 import java.net.Socket;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -26,12 +28,21 @@ public class RequestHandler extends Thread {
 			System.out.println("processing start!! " );
 
 			String line = br.readLine();
+			String action = line.substring(line.indexOf("/")+1, line.lastIndexOf("/")-5);
 			System.out.println(line);
+			System.out.println(action);
 			while(!line.equals("")){			
 				line = br.readLine();
 				System.out.println(line);		
 			}
-			byte[] body = "Hello World".getBytes();
+			File file = new File(".");
+			String filePath =  file.getAbsolutePath(); 
+			File file2 = new File(filePath + File.separator + action );
+			FileInputStream fis = new FileInputStream(file2);
+			
+			byte[] body = new byte[1000];
+			fis.read(body);
+//			byte[] body = "Hello World".getBytes();
 			response200Header(dos, body.length);
 			responseBody(dos, body);
 		}catch(Exception e) {
